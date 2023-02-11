@@ -1,4 +1,4 @@
-let pageNumber = 0;
+let pageNumber = 1;
 
 document.getElementById("load_next").addEventListener("click", function() {
   pageNumber++;
