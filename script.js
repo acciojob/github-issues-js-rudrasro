@@ -34,3 +34,4 @@ loadPrev.addEventListener("click", () => {
     pageNumber.textContent = `Page Number ${currentPage}`;
   }
 });
+//
