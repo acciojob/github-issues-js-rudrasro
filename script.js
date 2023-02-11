@@ -1,36 +1,36 @@
-const issuesList = document.getElementById("issues_list");
-const pageNumber = document.getElementById("page_number");
-const loadPrev = document.getElementById("load_prev");
-const loadNext = document.getElementById("load_next");
+const issuesList = document.getElementById("issues-list");
+const pageNumber = document.getElementById("page-number");
+const loadPrevButton = document.getElementById("load_prev");
+const loadNextButton = document.getElementById("load_next");
 
 let currentPage = 1;
 
-const fetchIssues = (page) => {
-  const apiUrl = `https://api.github.com/repositories/1296269/issues?page=${page}&per_page=5`;
-  fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      issuesList.innerHTML = "";
-      data.forEach((issue) => {
-        const li = document.createElement("li");
-        li.textContent = issue.title;
-        issuesList.appendChild(li);
-      });
-    });
-};
-
-fetchIssues(currentPage);
-
-loadNext.addEventListener("click", () => {
-  currentPage++;
+loadNextButton.addEventListener("click", () => {
+  currentPage += 1;
   fetchIssues(currentPage);
-  pageNumber.textContent = `Page Number ${currentPage}`;
 });
 
-loadPrev.addEventListener("click", () => {
+loadPrevButton.addEventListener("click", () => {
   if (currentPage > 1) {
-    currentPage--;
+    currentPage -= 1;
     fetchIssues(currentPage);
-    pageNumber.textContent = `Page Number ${currentPage}`;
   }
 });
+
+async function fetchIssues(page) {
+  const response = await fetch(
+    `https://api.github.com/repositories/1296269/issues?page=${page}&per_page=5`
+  );
+  const data = await response.json();
+
+  pageNumber.innerHTML = `Page number ${page}`;
+  issuesList.innerHTML = "";
+
+  data.forEach((issue) => {
+    const listItem = document.createElement("li");
+    listItem.innerHTML = issue.title;
+    issuesList.appendChild(listItem);
+  });
+}
+
+fetchIssues(currentPage);
