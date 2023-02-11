@@ -1,5 +1,5 @@
 let pageNumber = 1;
-let issuesList = document.getElementById("issues_list");
+let issuesList = document.getElementById("issue_list");
 let pageHeading = document.getElementById("page_number");
 
 document.getElementById("load_next").addEventListener("click", function () {
