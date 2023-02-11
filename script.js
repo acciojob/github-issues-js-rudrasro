@@ -1,41 +1,30 @@
-const issuesList = document.getElementById("issue-list");
-const pageNumberEl = document.getElementById("page-number");
-const loadNextBtn = document.getElementById("load-next");
-const loadPrevBtn = document.getElementById("load-prev");
-
 let pageNumber = 1;
 
-const updatePage = (issues) => {
-  // Clear the current list of issues
-  issuesList.innerHTML = "";
-
-  // Loop through the issues and create a new list item for each one
-  for (let issue of issues) {
-    const newItem = document.createElement("li");
-    newItem.innerText = issue.title;
-    issuesList.appendChild(newItem);
-  }
-
-  // Update the page number
-  pageNumberEl.innerText = `Page Number ${pageNumber}`;
-};
-
-const loadIssues = (page) => {
-  fetch(`https://api.github.com/repositories/1296269/issues?page=${page}&per_page=5`)
-    .then((response) => response.json())
-    .then((data) => updatePage(data));
-};
-
-loadIssues(pageNumber);
-
-loadNextBtn.addEventListener("click", () => {
+document.getElementById("load_next").addEventListener("click", function() {
   pageNumber++;
-  loadIssues(pageNumber);
+  updatePage(pageNumber);
 });
 
-loadPrevBtn.addEventListener("click", () => {
+document.getElementById("load_prev").addEventListener("click", function() {
   if (pageNumber > 1) {
     pageNumber--;
-    loadIssues(pageNumber);
+    updatePage(pageNumber);
   }
 });
+
+function updatePage(pageNumber) {
+  fetch(`https://api.github.com/repositories/1296269/issues?page=${pageNumber}&per_page=5`)
+    .then(response => response.json())
+    .then(data => {
+      let issueList = document.getElementById("issue_list");
+      issueList.innerHTML = "";
+      data.forEach(function(issue) {
+        let listItem = document.createElement("li");
+        listItem.innerText = issue.title;
+        issueList.appendChild(listItem);
+      });
+      document.getElementById("page_number").innerText = `Page Number ${pageNumber}`;
+    });
+}
+
+updatePage(pageNumber);
