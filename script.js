@@ -13,7 +13,7 @@ const fetchIssues = (page) => {
       issuesList.innerHTML = "";
       data.forEach((issue) => {
         const li = document.createElement("li");
-        li.innerHTML = issue.title;
+        li.textContent = issue.title;
         issuesList.appendChild(li);
       });
     });
@@ -24,13 +24,13 @@ fetchIssues(currentPage);
 loadNext.addEventListener("click", () => {
   currentPage++;
   fetchIssues(currentPage);
-  pageNumber.innerHTML = `Page Number ${currentPage}`;
+  pageNumber.textContent = `Page Number ${currentPage}`;
 });
 
 loadPrev.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     fetchIssues(currentPage);
-    pageNumber.innerHTML = `Page Number ${currentPage}`;
+    pageNumber.textContent = `Page Number ${currentPage}`;
   }
 });
